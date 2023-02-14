@@ -2,8 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Cors = require("cors");
 const dotenv = require("dotenv");
+const functions = require("firebase-functions");
 
 dotenv.config();
+
 const {
   getTodos,
   createTodo,
@@ -14,7 +16,8 @@ const {
 //App config
 const app = express();
 
-const port = process.env.PORT || 8000;
+//const port = process.env.PORT || 5000;
+const port = 3000;
 
 const connectionURL = process.env.MONGO_URI;
 //Middlewares
@@ -43,3 +46,5 @@ app.put("/todos/:id", updateTodo);
 
 //Delete a Todo
 app.delete("/todos/:id", deleteTodo);
+
+exports.api = functions.https.onRequest(app);
